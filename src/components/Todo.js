@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {completeTodo} from './Todo.css'
+import './Todo.css'
 
 class Todo extends Component {
     constructor(props){
@@ -35,7 +35,7 @@ class Todo extends Component {
     }
 
     handleComplete() {
-        console.log('complete');
+        console.log('complete', {complete: !this.state.complete});
         this.setState({complete: !this.state.complete});
     }
     
@@ -43,8 +43,8 @@ class Todo extends Component {
         let result;     
         if (this.state.isEditing) {
             result =  (
-                      <div>
-                        <form onSubmit={this.handleSave}>
+                      <div className="Todo">
+                        <form onSubmit={this.handleSave} className="Todo-edit-form">
                             <input name="task" value={this.state.task} type="text" onChange={this.handleChange}/>
                             <button>Save</button>
                         </form>
@@ -52,12 +52,20 @@ class Todo extends Component {
                       );      
         } else {
             result =  (
-                       <div>
-                        <button onClick={this.handleToggle}>Edit</button>
-                        <button onClick={this.handleRemove}>X</button>
-                        <li onClick={this.handleComplete} className={this.state.complete ? 'completeTodo' : ''}>
-                            {this.props.task}
-                        </li>               
+                       <div className="Todo">
+                            <li onClick={this.handleComplete} className={this.state.complete ? "Todo-task completed" : "Todo-task"}>
+                                {this.props.task}
+                            </li>    
+                            <div className="Todo-buttons">
+                                <button onClick={this.handleToggle}>                                    
+                                    Edit
+                                    {/* <i class='fas fa-pen'/> */}
+                                </button>
+                                <button onClick={this.handleRemove}>
+                                    X
+                                    {/* <i class='fas fa-trash'/> */}
+                                </button>
+                            </div>                                   
                        </div> );
         }
         return(           
